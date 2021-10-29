@@ -13,6 +13,6 @@ namespace DotNetCoreSqlDb.Models
         {
         }
 
-        public DbSet<DotNetCoreSqlDb.Models.Todo> Todo { get; set; }
+        public DbSet<DotNetCoreSqlDb.Models.Ticket> Ticket { get; set; }
     }
 }

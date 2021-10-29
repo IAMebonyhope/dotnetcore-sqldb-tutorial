@@ -9,22 +9,22 @@ using DotNetCoreSqlDb.Models;
 
 namespace DotNetCoreSqlDb.Controllers
 {
-    public class TodosController : Controller
+    public class TicketsController : Controller
     {
         private readonly MyDatabaseContext _context;
 
-        public TodosController(MyDatabaseContext context)
+        public TicketsController(MyDatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: Todos
+        // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Todo.ToListAsync());
+            return View(await _context.Ticket.ToListAsync());
         }
 
-        // GET: Todos/Details/5
+        // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace DotNetCoreSqlDb.Controllers
                 return NotFound();
             }
 
-            var todo = await _context.Todo
+            var Ticket = await _context.Ticket
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (todo == null)
+            if (Ticket == null)
             {
                 return NotFound();
             }
 
-            return View(todo);
+            return View(Ticket);
         }
 
-        // GET: Todos/Create
+        // GET: Tickets/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Todos/Create
+        // POST: Tickets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Description,CreatedDate")] Todo todo)
+        public async Task<IActionResult> Create([Bind("ID,Title,Description,CreatedDate")] Ticket Ticket)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(todo);
+                _context.Add(Ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(todo);
+            return View(Ticket);
         }
 
-        // GET: Todos/Edit/5
+        // GET: Tickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace DotNetCoreSqlDb.Controllers
                 return NotFound();
             }
 
-            var todo = await _context.Todo.FindAsync(id);
-            if (todo == null)
+            var Ticket = await _context.Ticket.FindAsync(id);
+            if (Ticket == null)
             {
                 return NotFound();
             }
-            return View(todo);
+            return View(Ticket);
         }
 
-        // POST: Todos/Edit/5
+        // POST: Tickets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,CreatedDate")] Todo todo)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Description,CreatedDate")] Ticket Ticket)
         {
-            if (id != todo.ID)
+            if (id != Ticket.ID)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace DotNetCoreSqlDb.Controllers
             {
                 try
                 {
-                    _context.Update(todo);
+                    _context.Update(Ticket);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TodoExists(todo.ID))
+                    if (!TicketExists(Ticket.ID))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace DotNetCoreSqlDb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(todo);
+            return View(Ticket);
         }
 
-        // GET: Todos/Delete/5
+        // GET: Tickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace DotNetCoreSqlDb.Controllers
                 return NotFound();
             }
 
-            var todo = await _context.Todo
+            var Ticket = await _context.Ticket
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (todo == null)
+            if (Ticket == null)
             {
                 return NotFound();
             }
 
-            return View(todo);
+            return View(Ticket);
         }
 
-        // POST: Todos/Delete/5
+        // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var todo = await _context.Todo.FindAsync(id);
-            _context.Todo.Remove(todo);
+            var Ticket = await _context.Ticket.FindAsync(id);
+            _context.Ticket.Remove(Ticket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TodoExists(int id)
+        private bool TicketExists(int id)
         {
-            return _context.Todo.Any(e => e.ID == id);
+            return _context.Ticket.Any(e => e.ID == id);
         }
     }
 }
